@@ -12,4 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 
 val GROWW_BACKGROUND = Color(0xFF121212)
-val GROWW_GREEN = Color(0xFF0ABB91)
+val GROWW_GREEN = Color(0xFF00D09C)
