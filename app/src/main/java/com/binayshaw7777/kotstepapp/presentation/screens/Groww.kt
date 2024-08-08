@@ -1,5 +1,6 @@
 package com.binayshaw7777.kotstepapp.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,13 +17,13 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -32,12 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Vertices
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.binayshaw7777.kotstep.model.StepDefaults
+import com.binayshaw7777.kotstep.model.StepStyle
+import com.binayshaw7777.kotstep.model.numberedVerticalWithLabel
+import com.binayshaw7777.kotstep.ui.vertical.VerticalStepper
 import com.binayshaw7777.kotstepapp.presentation.ui.theme.GROWW_BACKGROUND
 import com.binayshaw7777.kotstepapp.presentation.ui.theme.GROWW_GREEN
 import com.binayshaw7777.kotstepapp.util.Constants.NOTO_SANS_FONT_FAMILY
@@ -115,7 +118,7 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(vertical = 16.dp)
+                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
             ) {
                 Text(
                     text = "HDFC Mid Cap Opportunities Direct Plan  Growth", style = TextStyle(
@@ -157,7 +160,8 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
         HorizontalDivider(color = Color.DarkGray, modifier = Modifier.padding(vertical = 24.dp))
 
         Text(
-            text = "Status", style = TextStyle(
+            text = "Status",
+            style = TextStyle(
                 fontFamily = ROBOTO_FONT_FAMILY,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
@@ -165,6 +169,93 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
             ),
             modifier = Modifier.padding(horizontal = 16.dp)
         )
+
+        VerticalStepper(
+            style = numberedVerticalWithLabel(
+                totalSteps = 3,
+                currentStep = 3,
+                trailingLabels = listOf(
+                    {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(
+                                "Payment confirmed",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                ),
+                            )
+                            Text(
+                                "02 Aug, '24, 09:00 AM",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                ),
+                            )
+                        }
+                    },
+                    {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(
+                                "Order approved by exchange",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                ),
+                            )
+                            Text(
+                                "03 Aug, '24, 09:05 AM",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                ),
+                            )
+                        }
+                    },
+                    {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(
+                                "Units allocated",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                ),
+                            )
+                            Text(
+                                "04 Aug, '24, 10:15 AM",
+                                style = TextStyle(
+                                    fontFamily = ROBOTO_FONT_FAMILY,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                ),
+                            )
+                        }
+                    }
+                ),
+                stepStyle = StepStyle(
+                    colors = StepDefaults(
+                        doneContentColor = GROWW_BACKGROUND,
+                        doneContainerColor = GROWW_GREEN,
+                    ),
+                    lineThickness = 1.dp,
+                    lineSize = 36.dp,
+                    stepSize = 18.dp
+                )
+            ),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            Log.d("GROWW", "Step clicked was: $it")
+        }
 
         HorizontalDivider(color = Color.DarkGray, modifier = Modifier.padding(vertical = 24.dp))
 
@@ -194,10 +285,13 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
 
         HorizontalDivider(color = Color.DarkGray, modifier = Modifier.padding(vertical = 24.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
             Icon(
                 imageVector = Icons.Filled.Help,
-                tint = Color.White,
+                tint = Color.LightGray,
                 contentDescription = null,
             )
             Text(
@@ -211,7 +305,7 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                imageVector = Icons.Default.KeyboardArrowDown,
+                imageVector = Icons.Default.KeyboardArrowRight,
                 tint = Color.White,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp)
