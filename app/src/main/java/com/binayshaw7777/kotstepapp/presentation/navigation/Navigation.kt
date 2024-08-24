@@ -14,7 +14,7 @@ import com.binayshaw7777.kotstepapp.presentation.screens.Home
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = Screen.AMAZON.name,
+    startDestination: String = Screen.HOME.name,
 ) {
     NavHost(
         modifier = modifier,

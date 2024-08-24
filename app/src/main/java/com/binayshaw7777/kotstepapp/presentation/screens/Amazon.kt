@@ -1,5 +1,6 @@
 package com.binayshaw7777.kotstepapp.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,22 +17,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.DocumentScanner
-import androidx.compose.material.icons.outlined.Mic
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,44 +39,36 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.binayshaw7777.kotstep.model.LineDefault
+import com.binayshaw7777.kotstep.model.LineType
+import com.binayshaw7777.kotstep.model.StepDefaults
+import com.binayshaw7777.kotstep.model.StepStyle
+import com.binayshaw7777.kotstep.model.tabVerticalWithLabel
+import com.binayshaw7777.kotstep.ui.vertical.VerticalStepper
 import com.binayshaw7777.kotstepapp.R
+import com.binayshaw7777.kotstepapp.presentation.ui.theme.AMAZON_GREEN
+import com.binayshaw7777.kotstepapp.presentation.ui.theme.AMAZON_TEXT_PRIMARY_GREEN
+import com.binayshaw7777.kotstepapp.presentation.ui.theme.AMAZON_TEXT_SECONDARY_GREEN
+import com.binayshaw7777.kotstepapp.presentation.ui.theme.GROWW_BACKGROUND
+import com.binayshaw7777.kotstepapp.presentation.ui.theme.GROWW_GREEN
+import com.binayshaw7777.kotstepapp.util.Constants.ROBOTO_FONT_FAMILY
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Amazon(modifier: Modifier = Modifier, onBack: () -> Unit) {
     Scaffold(
         topBar = {
-            AmazonTopAppBar()
-//            TopAppBar(
-//                title = { Text(text = "Amazon") },
-//                navigationIcon = {
-//                    IconButton(onClick = { onBack() }) {
-//                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-//                    }
-//                }
-//            )
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//            ) {
-//                IconButton(onClick = { onBack() }) {
-//                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-//                }
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.SpaceBetween
-//                ) {
-//                    Icon(Icons.Filled.Search, contentDescription = "Search")
-//                    Text(text = "Search Amazon.in")
-//                }
-//            }
+            AmazonTopAppBar {
+                onBack()
+            }
         }
     ) { paddingValues ->
         AmazonContent(modifier = modifier, paddingValues = paddingValues)
@@ -98,7 +89,7 @@ fun AmazonContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
 }
 
 @Composable
-fun AmazonTopAppBar() {
+fun AmazonTopAppBar(onBack: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -123,10 +114,10 @@ fun AmazonTopAppBar() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(end = 16.dp, top = 16.dp, bottom = 16.dp)
             ) {
                 IconButton(
-                    onClick = {}
+                    onClick = { onBack() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -209,9 +200,10 @@ fun AmazonOrderTrackingUI() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(vertical = 16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-        Row {
+        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "Arriving today by 9 PM",
                 fontSize = 24.sp,
@@ -221,36 +213,120 @@ fun AmazonOrderTrackingUI() {
             Spacer(modifier = Modifier.weight(1f))
             Image(
                 painter = painterResource(id = R.drawable.macbook_image),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.width(64.dp),
+                contentScale = ContentScale.Fit
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 20.dp, bottom = 30.dp),
+            color = Color.LightGray
+        )
+
         OrderTrackingStatus()
-        Spacer(modifier = Modifier.height(24.dp))
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 20.dp), color = Color.LightGray, thickness = 4.dp)
+
         DeliveryDetails()
     }
 }
 
 @Composable
 fun OrderTrackingStatus() {
-    Column {
-        TrackingStep(
-            title = "Ordered Sunday, 20 February",
-            isCompleted = true
-        )
-        TrackingStep(
-            title = "Shipped Monday, 21 February",
-            isCompleted = true
-        )
-        TrackingStep(
-            title = "Out for delivery",
-            isCompleted = true,
-            showUpdates = true
-        )
-        TrackingStep(
-            title = "Arriving today",
-            isCompleted = false
-        )
+    VerticalStepper(
+        style = tabVerticalWithLabel(
+            totalSteps = 4,
+            currentStep = 2.6f,
+            trailingLabels = listOf(
+                {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            "Ordered Sunday, 20 March",
+                            style = TextStyle(
+                                fontFamily = ROBOTO_FONT_FAMILY,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 16.sp,
+                                color = AMAZON_TEXT_PRIMARY_GREEN
+                            )
+                        )
+                    }
+                },
+                {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            "Shipped Monday, 21 March",
+                            style = TextStyle(
+                                fontFamily = ROBOTO_FONT_FAMILY,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 16.sp,
+                                color = AMAZON_TEXT_PRIMARY_GREEN
+                            )
+                        )
+                    }
+                },
+                {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            "Out for delivery",
+                            style = TextStyle(
+                                fontFamily = ROBOTO_FONT_FAMILY,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                                color = AMAZON_TEXT_PRIMARY_GREEN
+                            ),
+                        )
+                        Text(
+                            "See all updates",
+                            style = TextStyle(
+                                fontFamily = ROBOTO_FONT_FAMILY,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp,
+                                color = AMAZON_TEXT_SECONDARY_GREEN
+                            ),
+                        )
+                    }
+                },
+                {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Text(
+                            "Arriving today by 9 PM",
+                            style = TextStyle(
+                                fontFamily = ROBOTO_FONT_FAMILY,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 16.sp,
+                                color = Color.LightGray
+                            )
+                        )
+                    }
+                }
+            ),
+            stepStyle = StepStyle(
+                colors = StepDefaults(
+                    doneContentColor = AMAZON_GREEN,
+                    doneContainerColor = AMAZON_GREEN,
+                    currentContainerColor = AMAZON_GREEN,
+                    doneLineColor = AMAZON_GREEN,
+                    checkMarkColor = Color.White,
+                    currentLineColor = AMAZON_GREEN,
+                    todoLineColor = Color.LightGray
+                ),
+                lineStyle = LineDefault(
+                    lineThickness = 4.dp,
+                    lineSize = 48.dp,
+                    todoLineTrackType = LineType.DASHED,
+                    todoLineProgressType = LineType.DASHED,
+                    currentLineTrackType = LineType.DASHED,
+                    currentLineProgressType = LineType.SOLID
+                ),
+                stepSize = 28.dp,
+                showStrokeOnCurrent = true,
+                stepShape = RectangleShape
+            )
+        ),
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Log.d("GROWW", "Step clicked was: $it")
     }
 }
 
@@ -292,31 +368,40 @@ fun TrackingStep(
 
 @Composable
 fun DeliveryDetails() {
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = "Delivery by Amazon",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            fontFamily = ROBOTO_FONT_FAMILY,
+            color = AMAZON_TEXT_PRIMARY_GREEN
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Tracking ID: 277006711517",
-            fontSize = 16.sp,
-            color = Color.Gray
+            fontWeight = FontWeight.Medium,
+            fontSize = 14.sp,
+            fontFamily = ROBOTO_FONT_FAMILY,
+            color = AMAZON_TEXT_PRIMARY_GREEN
         )
-        Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    HorizontalDivider(modifier = Modifier.padding(vertical = 20.dp), color = Color.LightGray, thickness = 4.dp)
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = "Shipping Address",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            fontFamily = ROBOTO_FONT_FAMILY,
+            color = AMAZON_TEXT_PRIMARY_GREEN
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Sheenam\nB-16/86/1 GHALORI GATE PATIALA,\nPatiala Punjab 147001",
-            fontSize = 16.sp,
-            color = Color.Gray
+            text = "167, OK, Some random address, c'mon I'm not gonna reveal my address lmao",
+            fontSize = 14.sp,
+            fontFamily = ROBOTO_FONT_FAMILY,
+            color = AMAZON_TEXT_PRIMARY_GREEN
         )
     }
 }
