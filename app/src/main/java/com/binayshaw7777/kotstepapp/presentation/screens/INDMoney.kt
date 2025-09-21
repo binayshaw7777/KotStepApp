@@ -52,7 +52,6 @@ import com.binayshaw7777.kotstep.v3.KotStep
 import com.binayshaw7777.kotstep.v3.util.ExperimentalKotStep
 import com.binayshaw7777.kotstepapp.R
 import com.binayshaw7777.kotstepapp.presentation.ui.theme.AtypFontFamily
-import com.binayshaw7777.kotstepapp.util.Util.StepContent
 import com.binayshaw7777.kotstepapp.util.Util.StepLabel
 import com.binayshaw7777.kotstepapp.util.Util.getIndMoneyStepperSteps
 import com.binayshaw7777.kotstepapp.util.Util.getIndMoneyStepperStyle
@@ -253,14 +252,14 @@ private fun StepperContent() {
         ) {
             stepItems.value.forEach { item ->
                 step(
-                    content = { StepContent(item.number, item.numberColor) },
+                    title = item.number,
                     label = {
                         StepLabel(item) {
-                            stepValue = (stepValue + 1) % stepItems.value.size
+                            stepValue = (stepValue + 1) % 6
                         }
                     },
                     onClick = {
-                        stepValue = (stepValue + 1) % stepItems.value.size
+                        stepValue = (stepValue + 1) % 6
                     }
                 )
             }

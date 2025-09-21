@@ -42,16 +42,6 @@ object Util {
     }
 
     @Composable
-    fun StepContent(number: String, color: Color) {
-        Text(
-            text = number,
-            fontSize = 11.sp,
-            color = color,
-            style = TextStyle(platformStyle = PlatformTextStyle(includeFontPadding = false))
-        )
-    }
-
-    @Composable
     fun StepLabel(item: StepItem, onClick: () -> Unit = {}) {
         Row(
             modifier = Modifier
@@ -148,18 +138,18 @@ object Util {
                 onTodo = StepStyle.defaultTodo().copy(
                     stepSize = 20.dp,
                     stepColor = Color(0xFFF5F5F7),
-                    textStyle = TextStyle(color = Color(0xFFBDBDBD)),
+                    textStyle = TextStyle(color = Color(0xFFBDBDBD), platformStyle = PlatformTextStyle(includeFontPadding = false), fontSize = 11.sp),
                     borderStyle = BorderStyle(width = 2.dp, color = Color(0xFFBDBDBD))
                 ),
                 onCurrent = StepStyle.defaultTodo().copy(
                     stepColor = Color(0xFF252A30),
                     stepSize = 24.dp,
-                    textStyle = TextStyle(color = Color(0xFF838A90)),
+                    textStyle = TextStyle(color = Color(0xFF838A90), platformStyle = PlatformTextStyle(includeFontPadding = false), fontSize = 11.sp),
                     borderStyle = BorderStyle(width = 1.dp, color = Color(0xFF838A90))
                 ),
                 onDone = StepStyle.defaultTodo().copy(
                     stepSize = 20.dp,
-                    textStyle = TextStyle(color = Color.White),
+                    textStyle = TextStyle(color = Color.White, platformStyle = PlatformTextStyle(includeFontPadding = false), fontSize = 11.sp),
                     stepColor = Color(0xFF1AB780)
                 )
             ),
