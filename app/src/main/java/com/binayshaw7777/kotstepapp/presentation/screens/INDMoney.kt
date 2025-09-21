@@ -60,6 +60,7 @@ import com.binayshaw7777.kotstep.v3.util.ExperimentalKotStep
 import com.binayshaw7777.kotstepapp.R
 import com.binayshaw7777.kotstepapp.presentation.ui.theme.AtypFontFamily
 import androidx.core.net.toUri
+import com.binayshaw7777.kotstepapp.util.Util.openLink
 
 @Composable
 fun INDMoney(
@@ -91,10 +92,7 @@ fun HelpCard() {
             fontWeight = FontWeight.SemiBold,
             color = Color(0xFF4597F3),
             modifier = Modifier.padding(bottom = 4.dp).clickable {
-                val url = "https://github.com/binayshaw7777/KotStep" // Replace with your desired URL
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = url.toUri()
-                context.startActivity(intent)
+                context.openLink()
             }
         )
         Text(
@@ -112,7 +110,9 @@ fun HelpCard() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = { /* Handle Manage SIP click */ },
+                onClick = {
+                    context.openLink()
+                },
                 modifier = Modifier
                     .weight(1f),
                 shape = RoundedCornerShape(24.dp),
@@ -121,7 +121,9 @@ fun HelpCard() {
                 Text(text = "Manage SIP", color = Color.White, fontSize = 14.sp)
             }
             Button(
-                onClick = { /* Handle Invest More click */ },
+                onClick = {
+                    context.openLink()
+                },
                 modifier = Modifier
                     .weight(1f),
                 shape = RoundedCornerShape(24.dp),
@@ -157,8 +159,9 @@ fun SipDetailsCard() {
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
+                    textAlign = TextAlign.Center,
                     lineHeight = 28.sp,
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))

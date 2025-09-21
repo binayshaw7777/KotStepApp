@@ -15,7 +15,7 @@ import com.binayshaw7777.kotstepapp.presentation.screens.INDMoney
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = Screen.INDMONEY.name,
+    startDestination: String = Screen.HOME.name,
 ) {
     NavHost(
         modifier = modifier,
