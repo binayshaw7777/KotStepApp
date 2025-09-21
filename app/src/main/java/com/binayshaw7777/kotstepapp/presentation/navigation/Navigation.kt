@@ -9,6 +9,7 @@ import com.binayshaw7777.kotstepapp.presentation.screens.Amazon
 import com.binayshaw7777.kotstepapp.presentation.screens.Flipkart
 import com.binayshaw7777.kotstepapp.presentation.screens.Groww
 import com.binayshaw7777.kotstepapp.presentation.screens.Home
+import com.binayshaw7777.kotstepapp.presentation.screens.INDMoney
 
 @Composable
 fun AppNavHost(
@@ -39,6 +40,11 @@ fun AppNavHost(
         }
         composable(Screen.GROWW.name) {
             Groww() {
+                navController.popBackStack()
+            }
+        }
+        composable(Screen.INDMONEY.name) {
+            INDMoney {
                 navController.popBackStack()
             }
         }
