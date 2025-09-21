@@ -1,7 +1,5 @@
 package com.binayshaw7777.kotstepapp.presentation.screens
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,14 +30,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.PlatformTextStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -49,17 +49,12 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.binayshaw7777.kotstep.v3.KotStep
-import com.binayshaw7777.kotstep.v3.model.step.StepLayoutStyle
-import com.binayshaw7777.kotstep.v3.model.style.BorderStyle
-import com.binayshaw7777.kotstep.v3.model.style.KotStepStyle
-import com.binayshaw7777.kotstep.v3.model.style.LineStyle
-import com.binayshaw7777.kotstep.v3.model.style.LineStyles
-import com.binayshaw7777.kotstep.v3.model.style.StepStyle
-import com.binayshaw7777.kotstep.v3.model.style.StepStyles
 import com.binayshaw7777.kotstep.v3.util.ExperimentalKotStep
 import com.binayshaw7777.kotstepapp.R
 import com.binayshaw7777.kotstepapp.presentation.ui.theme.AtypFontFamily
-import androidx.core.net.toUri
+import com.binayshaw7777.kotstepapp.util.Util.StepLabel
+import com.binayshaw7777.kotstepapp.util.Util.getIndMoneyStepperSteps
+import com.binayshaw7777.kotstepapp.util.Util.getIndMoneyStepperStyle
 import com.binayshaw7777.kotstepapp.util.Util.openLink
 
 @Composable
@@ -236,6 +231,11 @@ fun KeyValuRow(label: String, value: String) {
 @Composable
 private fun StepperContent() {
     Column(modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)) {
+
+        val stepperStyle = remember { mutableStateOf(getIndMoneyStepperStyle()) }
+        val stepItems = remember { mutableStateOf(getIndMoneyStepperSteps()) }
+        var stepValue by remember { mutableIntStateOf(1) }
+
         Text(
             text = "ORDER STATUS (Order Id: 1234567890)",
             fontSize = 10.sp,
@@ -243,289 +243,26 @@ private fun StepperContent() {
             color = Color(0xFF979CA2),
         )
 
-        val kotStepStyle = KotStepStyle(
-            stepLayoutStyle = StepLayoutStyle.Vertical,
-            showCheckMarkOnDone = false,
-            ignoreCurrentState = false,
-            stepStyle = StepStyles.default().copy(
-                onTodo = StepStyle.defaultTodo().copy(
-                    stepSize = 20.dp,
-                    stepColor = Color(0xFFF5F5F7),
-                    borderStyle = BorderStyle(width = 2.dp, color = Color(0xFFBDBDBD))
-                ),
-                onCurrent = StepStyle.defaultTodo().copy(
-                    stepColor = Color(0xFF252A30),
-                    stepSize = 24.dp,
-                    borderStyle = BorderStyle(width = 1.dp, color = Color(0xFF838A90))
-                ),
-                onDone = StepStyle.defaultTodo().copy(
-                    stepSize = 20.dp,
-                    stepColor = Color(0xFF1AB780)
-                )
-            ),
-            lineStyle = LineStyles.default().copy(
-                onTodo = LineStyle.defaultTodo().copy(
-                    lineThickness = 2.dp,
-                    lineLength = 24.dp,
-                    linePadding = PaddingValues(4.dp),
-                    lineColor = Color(0xFF767779),
-                    progressColor = Color(0xFF767779)
-                ),
-                onCurrent = LineStyle.defaultCurrent().copy(
-                    lineThickness = 2.dp,
-                    lineLength = 24.dp,
-                    linePadding = PaddingValues(4.dp),
-                    lineColor = Color(0xFF767779),
-                    progressColor = Color(0xFF767779),
-                ),
-                onDone = LineStyle.defaultDone().copy(
-                    lineThickness = 2.dp,
-                    lineLength = 24.dp,
-                    linePadding = PaddingValues(4.dp),
-                    lineColor = Color(0xFF767779),
-                    progressColor = Color(0xFF767779)
-                )
-            )
-        )
-
         Spacer(modifier = Modifier.height(16.dp))
 
         KotStep(
             modifier = Modifier.fillMaxWidth(),
-            currentStep = { 1f },
-            style = kotStepStyle
+            currentStep = { stepValue.toFloat() },
+            style = stepperStyle.value
         ) {
-            step(
-                content = {
-                    Text(
-                        "1", fontSize = 11.sp, color = Color.White, style = TextStyle(
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            )
-                        )
-                    )
-                }, label = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(
-                                text = "SIP registration",
-                                fontSize = 12.sp,
-                                color = Color(0xFF979CA2),
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Text(
-                                text = "18 Sep 2025 09:59 AM",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    ),
-                                )
-                            )
+            stepItems.value.forEach { item ->
+                step(
+                    title = item.number,
+                    label = {
+                        StepLabel(item) {
+                            stepValue = (stepValue + 1) % 6
                         }
-
-                        Spacer(modifier = Modifier.weight(1f))
-
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    color = Color(0xFF152C22),
-                                    shape = RoundedCornerShape(4.dp)
-                                ).padding(horizontal = 4.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "Success",
-                                color = Color(0xFF32AB80),
-                                fontSize = 11.sp
-                            )
-                        }
+                    },
+                    onClick = {
+                        stepValue = (stepValue + 1) % 6
                     }
-                }
-            )
-            step(
-                content = {
-                    Text("2", fontSize = 12.sp, color = Color(0xFF838A90), style = TextStyle(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        )
-                    ))
-                }, label = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(
-                                text = "1st installment due",
-                                fontSize = 12.sp,
-                                color = Color(0xFF979CA2),
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Text(
-                                text = "03 Oct 2025",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                        }
-                    }
-                }
-            )
-            step(
-                content = {
-                    Text(
-                        "3", fontSize = 11.sp, color = Color(0xFFBDBDBD), style = TextStyle(
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            )
-                        )
-                    )
-                }, label = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(
-                                text = "Amount auto-debited from your a/c by BSE",
-                                fontSize = 12.sp,
-                                color = Color(0xFF979CA2),
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Text(
-                                text = "03 Oct 2025\nBank a/c: Compose Bank xxxx1234",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                        }
-                    }
-                }
-            )
-            step(
-                content = {
-                    Text(
-                        "4", fontSize = 11.sp, color = Color(0xFFBDBDBD), style = TextStyle(
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            )
-                        )
-                    )
-                }, label = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(
-                                text = "Auto-payment confirmation received from BSE",
-                                fontSize = 12.sp,
-                                color = Color(0xFF979CA2),
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Text(
-                                text = "03 Oct 2025",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                        }
-                    }
-                }
-            )
-            step(
-                content = {
-                    Text(
-                        "5", fontSize = 11.sp, color = Color(0xFFBDBDBD), style = TextStyle(
-                            platformStyle = PlatformTextStyle(
-                                includeFontPadding = false
-                            )
-                        )
-                    )
-                }, label = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Text(
-                                text = "Units to be allocated by mutual fund",
-                                fontSize = 12.sp,
-                                color = Color(0xFF979CA2),
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    )
-                                )
-                            )
-                            Text(
-                                text = "07 Oct 2025\nEst NAV Date: 03 Oct 2025",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Medium,
-                                color = Color.White,
-                                style = TextStyle(
-                                    platformStyle = PlatformTextStyle(
-                                        includeFontPadding = false
-                                    ),
-                                )
-                            )
-                        }
-                    }
-                }
-            )
+                )
+            }
         }
     }
 }
