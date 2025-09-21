@@ -37,6 +37,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.binayshaw7777.kotstep.model.LineDefault
 import com.binayshaw7777.kotstep.model.StepDefaults
 import com.binayshaw7777.kotstep.model.StepStyle
 import com.binayshaw7777.kotstep.model.numberedVerticalWithLabel
@@ -246,9 +247,14 @@ fun GrowwContent(modifier: Modifier = Modifier, paddingValues: PaddingValues) {
                     colors = StepDefaults(
                         doneContentColor = GROWW_BACKGROUND,
                         doneContainerColor = GROWW_GREEN,
+                        doneLineColor = Color.DarkGray
                     ),
-                    lineThickness = 1.dp,
-                    lineSize = 36.dp,
+                    lineStyle = LineDefault(
+                        lineThickness = 1.dp,
+                        lineSize = 36.dp,
+                        linePaddingTop = 5.dp,
+                        linePaddingBottom = 5.dp
+                    ),
                     stepSize = 18.dp
                 )
             ),
