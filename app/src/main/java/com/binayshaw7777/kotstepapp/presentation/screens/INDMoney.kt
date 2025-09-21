@@ -425,7 +425,7 @@ private fun StepperContent() {
                                 )
                             )
                             Text(
-                                text = "03 Oct 2025\nBank a/c: Compose Bank of India xxxx1234",
+                                text = "03 Oct 2025\nBank a/c: Compose Bank xxxx1234",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = Color.White,
@@ -435,6 +435,7 @@ private fun StepperContent() {
                                     )
                                 )
                             )
+                            Spacer(modifier = Modifier.height(4.dp))
                         }
                     }
                 }

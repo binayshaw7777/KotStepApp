@@ -16,8 +16,8 @@ enum class Screen {
 }
 
 enum class NavigationScreen {
-    FLIPKART,
-    AMAZON,
-    GROWW,
+//    FLIPKART,
+//    AMAZON,
+//    GROWW,
     INDMONEY
 }
