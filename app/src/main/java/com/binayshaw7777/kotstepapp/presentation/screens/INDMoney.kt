@@ -160,11 +160,11 @@ fun SipDetailsCard() {
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
-                KeyValuRow(label = "Order ID", value = "50503235")
+                KeyValuRow(label = "Order ID", value = "12345678")
                 Spacer(modifier = Modifier.height(2.dp))
                 HorizontalDivider(color = Color(0xFF252A30))
                 Spacer(modifier = Modifier.height(8.dp))
-                KeyValuRow(label = "SIP Amount", value = "₹500")
+                KeyValuRow(label = "SIP Amount", value = "₹5,000")
                 Spacer(modifier = Modifier.height(2.dp))
                 HorizontalDivider(color = Color(0xFF252A30))
                 Spacer(modifier = Modifier.height(8.dp))
@@ -353,7 +353,7 @@ fun SipRegistrationCard(onBackPress: () -> Unit) {
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Text(
-                    text = "₹500/monthly",
+                    text = "₹5,000/monthly",
                     fontSize = 36.sp,
                     fontFamily = AtypFontFamily,
                     fontWeight = FontWeight.Bold,
